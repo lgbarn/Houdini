@@ -151,7 +151,7 @@ const string engine_info(bool to_uci)
 
 	//ss << NAME << " " << YEAR << setw(2) << setfill('0') << MONTH + 1 << setw(2) << DAY << endl;
 	ss << NAME << endl;
-	ss << (to_uci ? "id author " : "Stockfish Devlopers & Robert Houdart")  << endl;
+	ss << (to_uci ? "id author " : "Stockfish Developers & Robert Houdart")  << endl;
 	return ss.str();
 }
 
