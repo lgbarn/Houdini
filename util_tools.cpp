@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace 
+namespace
 {
 	struct Tie : public streambuf
 	{
@@ -98,9 +98,9 @@ namespace
 #endif
 
 #if defined(CHESSKING)
-#define PROGRAM_NAME "Houdini 6"
+#define PROGRAM_NAME "Houdidit 6"
 #else
-#define PROGRAM_NAME "Houdini 6.03"
+#define PROGRAM_NAME "Houdidit 6.03"
 #endif
 
 #if defined(IS_64BIT)
@@ -125,14 +125,14 @@ namespace
 
 	const int name_offsets[14] =
 	{
-		97 * ('R' - '§'), 97 * ('o' - 'R'), 97 * ('b' - 'o'), 97 * ('e' - 'b'), 97 * ('r' - 'e'), 97 * ('t' - 'r'), 97 * (' ' - 't'),
+		97 * ('R' - 'ï¿½'), 97 * ('o' - 'R'), 97 * ('b' - 'o'), 97 * ('e' - 'b'), 97 * ('r' - 'e'), 97 * ('t' - 'r'), 97 * (' ' - 't'),
 		97 * ('H' - ' '), 97 * ('o' - 'H'), 97 * ('u' - 'o'), 97 * ('d' - 'u'), 97 * ('a' - 'd'), 97 * ('r' - 'a'), 97 * ('t' - 'r')
 	};
 
 	void write_own_name(char *mijn_naam)
 	{
 		// onnozele functie om hex editing van de EXE file moeilijker te maken
-		char c = '§';
+		char c = 'ï¿½';
 		for (int n = 0; n < 14; n++)
 		{
 			c += name_offsets[n] / 97;
@@ -143,7 +143,7 @@ namespace
 } // namespace
 
 
-const string engine_info(bool to_uci) 
+const string engine_info(bool to_uci)
 {
 	stringstream ss;
 	char mijn_naam[15];
@@ -151,7 +151,7 @@ const string engine_info(bool to_uci)
 
 	//ss << NAME << " " << YEAR << setw(2) << setfill('0') << MONTH + 1 << setw(2) << DAY << endl;
 	ss << NAME << endl;
-	ss << (to_uci ? "id author " : "(c) 2017 ") << mijn_naam << endl;
+	ss << (to_uci ? "id author " : "Stockfish Devlopers & Robert Houdart")  << endl;
 	return ss.str();
 }
 
@@ -184,7 +184,7 @@ void dbg_min_max_of(int n, int v)
 	}
 }
 
-void dbg_print() 
+void dbg_print()
 {
 	for (int n = 0; n < MAX_STATS; n++) if (hits[n][0])
 		cerr << "Trace " << std::setw(2) << n << " Total " << std::setw(10) << hits[n][0] << " Hits " << std::setw(10) << hits[n][1]
@@ -207,7 +207,7 @@ void dbg_print()
 }
 
 
-std::ostream& operator<<(std::ostream& os, SyncCout sc) 
+std::ostream& operator<<(std::ostream& os, SyncCout sc)
 {
 	static Mutex mutex;
 
@@ -235,7 +235,7 @@ void prefetch2(void*) {}
 #  include <xmmintrin.h> // Intel and Microsoft header for _mm_prefetch()
 #endif
 
-void prefetch(void* addr) 
+void prefetch(void* addr)
 {
 #  if defined(__INTEL_COMPILER)
 	__asm__("");

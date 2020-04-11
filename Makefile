@@ -5,7 +5,7 @@
 UNAME = $(shell uname)
 
 ### Executable name
-EXE = h.exe
+EXE = houdini.exe
 
 ### Installation dir definitions
 PREFIX = /usr/local
@@ -15,14 +15,14 @@ BINDIR = $(PREFIX)/bin
 ifeq ($(PTIME),)
 	PTIME=1000
 endif
-PGOBENCH = ./$(EXE) bench 32 6 $(PTIME) default time
+PGOBENCH = ./$(EXE) bench 32 2 $(PTIME) default time
 
 ### Object files
 OBJS =
-
-ifneq ($(VERSION),Dev)
-	OBJS += egtb_nalimov.o egtb_nalimovprobe.o 
-endif
+VERSION=Pro
+#ifneq ($(VERSION),Dev)
+	OBJS += egtb_nalimov.o egtb_nalimovprobe.o
+#endif
 
 versmelt = yes
 
@@ -34,7 +34,7 @@ else
 		eval_pst.o main.o stelling.o uci.o uci_opties.o uci_tijd.o \
 		util_bench.o util_tools.o zet_generatie.o zet_hash.o \
 		zet_keuze.o zoek_smp.o syzygy/tbprobe.o \
-		egtb_syzygyprobe.o licentie.o 
+		egtb_syzygyprobe.o licentie.o
 endif
 
 COBJS = zlib/adler32.o zlib/crc32.o zlib/inffast.o zlib/inflate.o \
@@ -81,9 +81,9 @@ ifeq ($(ARCH),general-64)
 	bits = 64
 endif
 
-ifeq ($(ARCH),x86-64)
+ifeq ($(ARCH),x86-64)54
 	arch = x86_64
-	bits = 64
+	bits = 6464
 	prefetch = yes
 	sse = yes
 endif
@@ -103,6 +103,16 @@ ifeq ($(ARCH),native)
 	popcnt = yes
 	sse = yes
 endif
+ifeq ($(ARCH),x86-64-amd)
+	arch = x86_64
+	bits = 64
+	prefetch = yes
+	popcnt = yes
+	sse = yes
+	bmi1 = yes
+endif
+
+
 
 ifeq ($(ARCH),x86-64-bmi2)
 	arch = x86_64
@@ -130,17 +140,17 @@ endif
 ### 2.3 Compile versions
 ### ==========================================================================
 
-ifneq ($(VERSION),Dev)
-	CXXFLAGS += -DUSE_LICENSE
-endif
+##ifneq ($(VERSION),Dev)
+##	CXXFLAGS += -DUSE_LICENSE
+##endif
 
 ifeq ($(VERSION),Pro)
 	CXXFLAGS += -DPREMIUM
 endif
 
-ifeq ($(VERSION),Std)
-	CXXFLAGS += -DPRO_LICENSE
-endif
+###feq ($(VERSION),Std)
+#	CXXFLAGS += -DPRO_LICENSE
+#endif
 
 family = none
 
@@ -364,7 +374,11 @@ ifeq ($(pext),yes)
 		CXXFLAGS += -mbmi -mbmi2
 	endif
 endif
-
+ifeq ($(bmi1),yes)
+	ifeq ($(comp),$(filter $(comp),gcc clang mingw))
+		CXXFLAGS += -mbmi -msse4.2
+	endif
+endif
 ### 3.8 Link Time Optimization, it works since gcc 4.5 but not on mingw under Windows.
 ### This is a mix of compile and link time options because the lto link phase
 ### needs access to the optimization flags.
@@ -475,15 +489,15 @@ else ifeq ($(family)$(VERSION),ChessOKStd)
 else ifeq ($(family),ChessOK)
 	./InjectTables-H6-ChessOK.exe $(EXE)
 else ifeq ($(VERSION),Pro)
-	./InjectTables-H6Pro.exe $(EXE)
+#	./InjectTables-H6Pro.exe $(EXE)
 else ifeq ($(VERSION),Std)
 	./InjectTables-H6Pro.exe $(EXE)
 else ifneq ($(VERSION),Dev)
 	./InjectTables-H6.exe $(EXE)
 endif
 ifneq ($(VERSION),Dev)
-	./$(EXE) z? >nul 2>aes.dat
-	./InjectFileSize-H6.exe $(EXE) aes.dat
+#	./$(EXE) z? >nul 2>aes.dat
+#	./InjectFileSize-H6.exe $(EXE) aes.dat
 endif
 	@echo "Step 2b/4. Running benchmark for pgo-build ..."
 	$(PGOBENCH) >nul
