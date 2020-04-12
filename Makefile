@@ -5,7 +5,7 @@
 UNAME = $(shell uname)
 
 ### Executable name
-EXE = houdini.exe
+EXE = houdidit.exe
 
 ### Installation dir definitions
 PREFIX = /usr/local
@@ -81,9 +81,9 @@ ifeq ($(ARCH),general-64)
 	bits = 64
 endif
 
-ifeq ($(ARCH),x86-64)54
+ifeq ($(ARCH),x86-64)
 	arch = x86_64
-	bits = 6464
+	bits = 64
 	prefetch = yes
 	sse = yes
 endif
@@ -414,7 +414,7 @@ endif
 ### 3.10 Differentiate c++ and c compiles
 ### ==========================================================================
 CFLAGS := $(CXXFLAGS)
-CXXFLAGS += -fno-rtti -std=c++11
+CXXFLAGS += -fno-rtti -std=c++11 -Wno-multichar
 
 ### 4. Public targets
 ### ==========================================================================
@@ -500,7 +500,7 @@ ifneq ($(VERSION),Dev)
 #	./InjectFileSize-H6.exe $(EXE) aes.dat
 endif
 	@echo "Step 2b/4. Running benchmark for pgo-build ..."
-	$(PGOBENCH) >nul
+	$(PGOBENCH) >/dev/null
 	@echo ""
 	@echo "Step 3/4. Building final executable ..."
 	$(MAKE) -B ARCH=$(ARCH) COMP=$(COMP) $(profile_use)

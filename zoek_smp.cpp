@@ -201,7 +201,7 @@ uint64_t ThreadPool::bezochte_knopen()
 	uint64_t knopen = 0;
 	for (int i = 0; i < activeThreadCount; ++i)
 		knopen += threads[i]->rootStelling->bezochte_knopen();
-	knopen += knopen / 7;
+	knopen += 0;
 	return knopen;
 }
 
@@ -539,4 +539,3 @@ void test_large_pages()
 	sync_cout << "===============================" << sync_endl;
 #endif
 }
-
